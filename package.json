@@ -1,0 +1,41 @@
+{
+  "name": "react-router-ts",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "build": "react-router build",
+    "dev": "react-router dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^3.2.2",
+    "@prisma/client": "^6.12.0",
+    "@react-router/node": "^7.6.2",
+    "@react-router/serve": "^7.6.2",
+    "isbot": "^5.1.28",
+    "next-themes": "^0.4.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-icons": "^5.5.0",
+    "react-router": "^7.6.2",
+    "sharp": "^0.34.3"
+  },
+  "devDependencies": {
+    "@chakra-ui/cli": "^3.2.2",
+    "@react-router/dev": "^7.6.2",
+    "@types/node": "^24",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
+    "prisma": "^6.12.0",
+    "react-router-devtools": "^5.0.6",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.0",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
+}
