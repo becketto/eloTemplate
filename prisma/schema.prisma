@@ -13,8 +13,12 @@ datasource db {
 model Image {
   id        Int      @id @default(autoincrement())
   name      String
-  url       String
+  url       String   @unique // Ensure URL uniqueness to prevent duplicates
   elo       Float    @default(1200.0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([elo(sort: Desc)], map: "Image_elo_desc_idx") // Index for top rankings
+  @@index([elo(sort: Asc)], map: "Image_elo_asc_idx") // Index for bottom rankings  
+  @@index([createdAt], map: "Image_createdAt_idx") // Index for recent images
 }

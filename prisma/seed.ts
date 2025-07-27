@@ -10,7 +10,7 @@ async function main() {
   await prisma.image.deleteMany()
 
   // Scan the twitterMoots folder
-  const sourceDir = '/Users/beckett/Desktop/twitterMoots'
+  const sourceDir = 'placeholder'
 
   if (fs.existsSync(sourceDir)) {
     const files = fs.readdirSync(sourceDir)
@@ -23,12 +23,12 @@ async function main() {
       return
     }
 
-    // Copy images to public/images and create database entries
-    const publicImagesDir = path.join(process.cwd(), 'public', 'images')
+    // Copy images to the optimized directory and create database entries
+    const optimizedDir = 'placeholder'
 
-    // Create public/images directory if it doesn't exist
-    if (!fs.existsSync(publicImagesDir)) {
-      fs.mkdirSync(publicImagesDir, { recursive: true })
+    // Create optimized directory if it doesn't exist
+    if (!fs.existsSync(optimizedDir)) {
+      fs.mkdirSync(optimizedDir, { recursive: true })
     }
 
     const imageData = []
@@ -38,7 +38,7 @@ async function main() {
       const ext = path.extname(file).toLowerCase()
       const nameWithoutExt = file.replace(/\.[^/.]+$/, "")
       const optimizedFileName = `${nameWithoutExt}.webp`
-      const destPath = path.join(publicImagesDir, optimizedFileName)
+      const destPath = path.join(optimizedDir, optimizedFileName)
 
       try {
         // Optimize and convert image to WebP for better compression
@@ -55,19 +55,19 @@ async function main() {
 
         console.log(`Optimized: ${file} -> ${optimizedFileName}`)
 
-        // Create database entry
+        // Create database entry (you may need to adjust the URL path)
         imageData.push({
           name: nameWithoutExt,
-          url: `/images/${optimizedFileName}`,
+          url: `/optimized/${optimizedFileName}`,
           elo: 1200.0
         })
       } catch (error) {
         console.error(`Failed to optimize ${file}:`, error)
         // Fallback: copy original file
-        fs.copyFileSync(sourcePath, path.join(publicImagesDir, file))
+        fs.copyFileSync(sourcePath, path.join(optimizedDir, file))
         imageData.push({
           name: nameWithoutExt,
-          url: `/images/${file}`,
+          url: `/optimized/${file}`,
           elo: 1200.0
         })
       }
@@ -75,11 +75,20 @@ async function main() {
 
     await prisma.image.createMany({ data: imageData })
     console.log(`Imported ${imageData.length} images from twitterMoots folder!`)
-    console.log('Images copied to public/images/ and added to database')
+    console.log('Images copied to placeholder/ and added to database')
   } else {
     console.error('twitterMoots folder not found at:', sourceDir)
   }
 }
+
+main()
+  .catch((e) => {
+    console.error(e)
+    process.exit(1)
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })
 
 main()
   .catch((e) => {

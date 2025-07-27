@@ -24,16 +24,27 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ backgroundColor: '#1a1a1a', height: '100%' }}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body>
+      <body style={{
+        margin: 0,
+        backgroundColor: '#1a1a1a',
+        minHeight: '100%',
+        height: '100%'
+      }}>
         <Provider>
-          {children}
+          <div style={{
+            backgroundColor: '#1a1a1a',
+            minHeight: '100vh',
+            width: '100%'
+          }}>
+            {children}
+          </div>
           <ScrollRestoration />
           <Scripts />
         </Provider>
